@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ProductEventConsumer {
 
-    private final ProductUseCase productUseCase;         // ✅ 서비스 말고 유즈케이스에 의존!
+    private final ProductUseCase productUseCase;
     private final ProductSaveReplyProducer replyProducer;
 
     @KafkaListener(topics = "product-save-request", groupId = "product-group")
@@ -26,7 +26,7 @@ public class ProductEventConsumer {
         String replyTo = new String(record.headers().lastHeader("reply-to").value());
 
         ProductCommand.Request request = JsonUtil.fromJson(payload, ProductCommand.Request.class);
-        ProductCommand.Response response = productUseCase.save(request);   // ✅ 인터페이스 기반 호출
+        ProductCommand.Response response = productUseCase.save(request);
 
         replyProducer.sendResponse(replyTo, correlationId, response);
     }
