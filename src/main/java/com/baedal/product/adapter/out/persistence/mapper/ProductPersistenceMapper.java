@@ -4,6 +4,7 @@ import com.baedal.product.adapter.in.web.response.ProductRes;
 import com.baedal.product.adapter.out.persistence.entity.ProductEntity;
 import com.baedal.product.domain.model.Product;
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 @Mapper(componentModel = "spring")
 public interface ProductPersistenceMapper {

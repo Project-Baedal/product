@@ -22,5 +22,7 @@ public class ProductCommand {
         private String name;
         private String category;
         private int price;
+        private Long storeId;
+        private String productPictureUrl;
     }
 }

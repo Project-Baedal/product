@@ -1,5 +1,7 @@
 package com.baedal.product.adapter.out;
 
+import com.baedal.product.adapter.out.persistence.entity.ProductEntity;
+import com.baedal.product.adapter.out.persistence.mapper.ProductPersistenceMapper;
 import com.baedal.product.adapter.out.persistence.repository.ProductRepository;
 import com.baedal.product.application.mapper.ProductMapper;
 import com.baedal.product.application.port.out.ProductRepositoryPort;
@@ -15,7 +17,7 @@ import java.util.Optional;
 public class ProductPersistenceAdapter implements ProductRepositoryPort {
 
     private final ProductRepository productRepository;
-    private final ProductMapper productMapper;
+    private final ProductPersistenceMapper productPersistenceMapper;
 
     public Optional<Product> findById(Long productId) {
         return Optional.empty();
@@ -34,5 +36,12 @@ public class ProductPersistenceAdapter implements ProductRepositoryPort {
     @Override
     public void deleteById(Long productId) {
 
+    }
+
+    @Override
+    public List<Product> findByStoreId(Long storeId) {
+        return productRepository.findByStoreId(storeId).stream()
+                .map(productPersistenceMapper::entityToDomain)
+                .toList();
     }
 }

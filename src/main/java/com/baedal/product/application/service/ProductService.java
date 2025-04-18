@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ProductService implements ProductUseCase {
@@ -41,6 +43,20 @@ public class ProductService implements ProductUseCase {
     @Override
     public Product getProduct(Long productId) {
         return null;
+    }
+    @Override
+    public List<ProductCommand.Response> getProductsByStoreId(Long storeId) {
+        List<Product> products = repositoryPort.findByStoreId(storeId);
+        return products.stream()
+                .map(product -> ProductCommand.Response.builder()
+                        .productId(product.getProductId())
+                        .storeId(product.getStoreId())
+                        .name(product.getName())
+                        .category(product.getCategory())
+                        .price(product.getPrice())
+                        .productPictureUrl(product.getProductPictureUrl())
+                        .build())
+                .toList();
     }
 
 }
