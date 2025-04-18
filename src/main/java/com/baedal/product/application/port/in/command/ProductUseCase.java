@@ -8,4 +8,5 @@ public interface ProductUseCase {
     ProductCommand.Response createProduct(ProductCommand.Request productCommand);
     Product getProduct(Long productId);
     List<ProductCommand.Response> getProductsByStoreId(Long storeId);
+    ProductCommand.Response save(ProductCommand.Request request);
 }

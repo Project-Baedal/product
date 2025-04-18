@@ -1,5 +1,6 @@
 package com.baedal.product.application.service;
 
+import com.baedal.product.application.mapper.ProductMapper;
 import com.baedal.product.application.port.in.command.ProductCommand;
 import com.baedal.product.application.port.in.command.ProductUseCase;
 import com.baedal.product.application.port.out.ProductRepositoryPort;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ProductService implements ProductUseCase {
 
     private final ProductRepositoryPort repositoryPort;
-
+    private final ProductMapper productMapper;
 
     @Override
     @Transactional
@@ -48,15 +49,13 @@ public class ProductService implements ProductUseCase {
     public List<ProductCommand.Response> getProductsByStoreId(Long storeId) {
         List<Product> products = repositoryPort.findByStoreId(storeId);
         return products.stream()
-                .map(product -> ProductCommand.Response.builder()
-                        .productId(product.getProductId())
-                        .storeId(product.getStoreId())
-                        .name(product.getName())
-                        .category(product.getCategory())
-                        .price(product.getPrice())
-                        .productPictureUrl(product.getProductPictureUrl())
-                        .build())
+                .map(productMapper::toResponse) // ✅ 매퍼 사용
                 .toList();
+    }
+    public ProductCommand.Response save(ProductCommand.Request req) {
+        Product product = productMapper.toDomain(req);
+        Product saved = repositoryPort.save(product);
+        return productMapper.toResponse(saved);
     }
 
 }

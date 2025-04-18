@@ -22,19 +22,15 @@ public class ProductController {
     private final ProductUseCase productUseCase;
 
     @PostMapping("/create")
-    public ProductRes createProduct(@RequestBody ProductReq request) {
-        ProductCommand.Request command = productMapper.toCommand(request);
-        ProductCommand.Response response = productUseCase.createProduct(command);
-
-        return productMapper.toResponse(response);
+    public ResponseEntity<ProductCommand.Response> createProduct(@RequestBody ProductReq request) {
+        ProductCommand.Request command = productMapper.toCommand(request); // 🔁
+        ProductCommand.Response response = productUseCase.createProduct(command); // 🔁
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductRes>> getProductsByStoreId(@RequestParam Long storeId) {
+    public ResponseEntity<List<ProductCommand.Response>> getProductsByStoreId(@RequestParam Long storeId) {
         List<ProductCommand.Response> responses = productUseCase.getProductsByStoreId(storeId);
-        List<ProductRes> productResList = responses.stream()
-                .map(productMapper::toResponse)
-                .toList();
-        return ResponseEntity.ok(productResList);
+        return ResponseEntity.ok(responses);
     }
 }
