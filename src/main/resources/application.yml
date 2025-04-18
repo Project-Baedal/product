@@ -25,3 +25,8 @@ spring:
 
 server:
   port: 8084
+
+logging:
+  level:
+    root: info
+    com.baedal.product: debug

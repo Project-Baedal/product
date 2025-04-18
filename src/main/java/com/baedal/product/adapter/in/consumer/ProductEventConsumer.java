@@ -22,6 +22,7 @@ public class ProductEventConsumer {
     @KafkaListener(topics = "product-save-request", groupId = "product-group")
     public void consume(ConsumerRecord<String, String> record) {
         String payload = record.value();
+        log.info("Kafka 메시지 수신됨: {}", payload);
         String correlationId = new String(record.headers().lastHeader("correlation-id").value());
         String replyTo = new String(record.headers().lastHeader("reply-to").value());
 

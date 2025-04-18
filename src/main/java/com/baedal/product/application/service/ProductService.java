@@ -6,6 +6,7 @@ import com.baedal.product.application.port.in.command.ProductUseCase;
 import com.baedal.product.application.port.out.ProductRepositoryPort;
 import com.baedal.product.domain.model.Product;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class ProductService implements ProductUseCase {
 
     private final ProductRepositoryPort repositoryPort;
@@ -30,7 +32,9 @@ public class ProductService implements ProductUseCase {
                 .storeId(req.getStoreId())
                 .build();
 
+        log.info("Saving product: {}", product);
         Product savedProduct = repositoryPort.save(product);
+        log.info("Saved product: {}", savedProduct);
 
         // Domain -> Response
         return ProductCommand.Response.builder()
