@@ -15,7 +15,10 @@ public class ProductValidate {
     Long storeId = req.getStoreId();
     List<ProductInfo> productInfo = req.getProductInfo();
 
-    if (productInfo.size() != res.size()) { throw new RuntimeException("상품 정보가 일치하지 않습니다.");}
+    if (productInfo.size() != res.size()) {
+      throw new RuntimeException("상품 정보가 일치하지 않습니다.");
+    }
+
     // 순서 정렬
     productInfo.sort(Comparator.comparing(ProductInfo::getProductId));
     res.sort(Comparator.comparing(Response::getProductId));
@@ -26,9 +29,9 @@ public class ProductValidate {
 
       // 값이 일치하지 않을 때
       if (
-          ! storeId.equals(r.getStoreId())  &&
-          ! p.getProductName().equals(r.getProductName()) &&
-          p.getPrice() != r.getPrice()
+          !storeId.equals(r.getStoreId()) &&
+              !p.getProductName().equals(r.getProductName()) &&
+              p.getPrice() != r.getPrice()
       ) {
         throw new RuntimeException("상품 정보가 일치하지 않습니다.");
       }
