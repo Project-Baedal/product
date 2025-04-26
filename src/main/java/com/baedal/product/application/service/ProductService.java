@@ -10,6 +10,7 @@ import com.baedal.product.domain.model.ValidateOrderInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class ProductService implements ProductUseCase {
   private final ProductValidate productValidate;
 
   @Override
+  @Transactional(readOnly = true)
   public void validateOrderInfo(ValidateOrderInfoCommand.Request req) {
     // Request 값에서 ID 값만 추출
     ValidateOrderInfo.Request orderInfoReq = productMapper.validateOrderInfoToDomain(req.getProductInfo());
