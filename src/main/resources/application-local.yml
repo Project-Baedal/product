@@ -1,0 +1,28 @@
+server:
+  port: 8082
+
+spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5434/product
+#    username: product
+#    password: product
+#    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:10000
+    producer:
+      bootstrap-servers: localhost:10000
+
+logging:
+  level:
+    com.baedal: DEBUG
