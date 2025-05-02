@@ -1,6 +1,7 @@
 package com.baedal.product.adapter.out.persistence.mapper;
 
 import com.baedal.product.adapter.out.persistence.entity.ProductEntity;
+import com.baedal.product.domain.model.ProductInfo;
 import com.baedal.product.domain.model.ValidateOrderInfo;
 import java.util.List;
 import org.mapstruct.Mapper;
@@ -14,4 +15,6 @@ public interface ProductPersistenceMapper {
     @Mapping(target = "productId", source = "id")
     @Mapping(target = "productName", source = "name")
     ValidateOrderInfo.Response validateOrderInfoToDomain(ProductEntity entity);
+
+    List<ProductInfo.Response> getStoreProductToCommand(List<ProductEntity> entity);
 }

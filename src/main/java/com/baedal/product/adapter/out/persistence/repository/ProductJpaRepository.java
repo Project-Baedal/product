@@ -8,4 +8,6 @@ public interface ProductJpaRepository extends JpaRepository<ProductEntity, Long>
   
   List<ProductEntity> findAllByIdIn(List<Long> ids);
 
+  List<ProductEntity> findByStoreId(Long storeId);
+
 }

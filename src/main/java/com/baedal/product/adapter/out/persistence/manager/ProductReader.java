@@ -16,4 +16,8 @@ public class ProductReader {
     return productJpaRepository.findAllById(ids);
   }
 
+  public List<ProductEntity> findByStoreId(Long storeId) {
+    return productJpaRepository.findByStoreId(storeId);
+  }
+
 }
