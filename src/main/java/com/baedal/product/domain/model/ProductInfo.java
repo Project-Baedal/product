@@ -10,7 +10,7 @@ public class ProductInfo {
   @Builder
   public static class Response {
     private Long id;
-    private Long name;
+    private String name;
     private int price;
   }
 
