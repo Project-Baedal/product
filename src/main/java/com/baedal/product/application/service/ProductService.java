@@ -1,11 +1,13 @@
 package com.baedal.product.application.service;
 
+import com.baedal.product.application.command.GetStoreProductCommand.Response;
 import com.baedal.product.application.command.ValidateOrderInfoCommand;
 import com.baedal.product.application.mapper.ProductApplicationMapper;
 import com.baedal.product.application.port.in.ProductUseCase;
 import com.baedal.product.application.port.out.MessageSenderPort;
 import com.baedal.product.application.port.out.ProductRepositoryPort;
 import com.baedal.product.domain.business.ProductValidate;
+import com.baedal.product.domain.model.ProductInfo;
 import com.baedal.product.domain.model.ValidateOrderInfo;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -41,5 +43,13 @@ public class ProductService implements ProductUseCase {
       // 실패시 검증 실패 메세지 전달
       messageSenderPort.sendFailOrderValidate(req.getOrderTransactionId(), e.getMessage());
     }
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public List<Response> findProductsByStoreId(Long storeId) {
+
+    List<ProductInfo.Response> productInfos = productRepository.findByStoreId(storeId);
+    return productMapper.getStoreProductToDto(productInfos);
   }
 }
